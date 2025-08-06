@@ -2,6 +2,8 @@
 
 This is a full-stack AI-powered email generator app that allows users to input a prompt and automatically generates a well-written email using **Groq's LLaMA3 model**. Users can then review, edit, and send the email via a mock email service (Ethereal Email using Nodemailer).
 
+Link: https://ai-email-clean.vercel.app
+
 ---
 
 ## 🚀 Features
