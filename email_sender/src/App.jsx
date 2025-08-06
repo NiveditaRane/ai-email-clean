@@ -1,22 +1,24 @@
 import { useState } from "react";
-
+const apiBaseUrl = import.meta.env.VITE_API_URL;
 export default function App() {
   const [recipients, setRecipients] = useState("");
   const [prompt, setPrompt] = useState("");
   const [generatedEmail, setGeneratedEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+  
+
 
   const generateEmail = async () => {
     if (!prompt.trim()) return;
     setLoading(true);
     setMessage("");
     try {
-      const res = await fetch("http://localhost:5000/generate-email", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt }),
-      });
+     const res = await fetch(`${apiBaseUrl}/generate-email`, {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ prompt }),
+});
       const data = await res.json();
       if (data.email) setGeneratedEmail(data.email);
       else setMessage("Failed to get generated email.");
@@ -31,11 +33,12 @@ export default function App() {
     setLoading(true);
     setMessage("");
     try {
-      const res = await fetch("http://localhost:5000/send-email", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ recipients, emailBody: generatedEmail }),
-      });
+      const res = await fetch(`${apiBaseUrl}/send-email`, {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ recipients, emailBody: generatedEmail }),
+});
+
       const data = await res.json();
       setMessage(data.message || "Email sent.");
     } catch (err) {
